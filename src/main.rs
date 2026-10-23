@@ -1,15 +1,26 @@
-use anyhow::Result;
+use anyhow::{Context, Result};
+use clap::Parser;
 use log_tahlil::daraja::Daraja;
 use log_tahlil::hisobot::{darajalar_soni, top_xatolar};
 use log_tahlil::yigish::yig;
 use regex::Regex;
 use std::fs;
+use std::path::PathBuf;
+
+/// Laravel log fayllarini tahlil qiladi
+#[derive(Parser)]
+struct Args {
+    /// Log faylining yo'li
+    fayl: PathBuf,
+}
 
 fn main() -> Result<()> {
+    let args = Args::parse();
     let re = Regex::new(r"^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\] \w+\.(\w+): (.*)$")?;
     let re_sarlavha = Regex::new(r#""[^"]*"|\d+"#)?;
 
-    let matn = fs::read_to_string("laravel.log")?;
+    let matn = fs::read_to_string(&args.fayl)
+        .with_context(|| format!("Fayl topilmadi {}", args.fayl.display()))?;
 
     let yozuvlar = yig(&matn, &re, &re_sarlavha);
 
