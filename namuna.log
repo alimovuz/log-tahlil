@@ -1,0 +1,17 @@
+[2026-10-21 09:14:02] production.INFO: User logged in {"user_id":"USER_1"}
+[2026-10-21 09:14:37] production.INFO: Order created {"order_id":1042,"items":3}
+[2026-10-21 09:15:10] production.WARNING: Slow query detected {"time_ms":1840,"table":"orders"}
+[2026-10-21 09:16:55] production.ERROR: Undefined array key "price" {"userId":"USER_2","exception":"[object] (ErrorException(code: 0): Undefined array key \"price\" at /var/www/app/Services/CartService.php:57)
+[stacktrace]
+#0 /var/www/app/Services/CartService.php(57): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
+#1 /var/www/app/Http/Controllers/CartController.php(31): App\\Services\\CartService->total()
+#2 /var/www/vendor/laravel/framework/src/Illuminate/Routing/Controller.php(54): App\\Http\\Controllers\\CartController->show()
+#3 {main}
+"}
+[2026-10-21 09:17:20] production.INFO: Payment received {"order_id":1042,"amount":150000}
+[2026-10-21 09:20:03] production.ERROR: Connection refused {"exception":"[object] (RedisException(code: 0): Connection refused at /var/www/vendor/predis/Client.php:120)
+[stacktrace]
+#0 /var/www/vendor/predis/Client.php(120): Predis\\Connection->connect()
+#1 {main}
+"}
+[2026-10-21 09:21:44] production.WARNING: Rate limit almost reached {"ip":"IP_1","hits":58}
