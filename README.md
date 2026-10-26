@@ -11,13 +11,23 @@ Log faylni o'qib, har bir daraja necha marta uchraganini va eng ko'p takrorlanga
 
 ```
 Darajalar soni:
+  Error: 5
+  Warning: 5
+  Critical: 3
   Info: 3
-  Warning: 2
-  Error: 2
+  Notice: 2
+  Debug: 2
+  Emergency: 1
+  Alert: 1
+  Unknown("CUSTOM"): 1
 
 Top xatolar:
-  1 × Connection refused
-  1 × Undefined array key "..."
+  3 × Undefined array key N
+  2 × Payment gateway timeout after N seconds
+  2 × SQLSTATE[HYN] [N] Connection refused
+  1 × Database server unreachable
+  1 × Disk usage at N%
+  1 × Queue worker stopped
 ```
 
 ## Ishga tushirish
@@ -92,7 +102,6 @@ Bog'liqliklar: [`regex`](https://docs.rs/regex), [`anyhow`](https://docs.rs/anyh
 - Xabar matnining o'zida ` {` bo'lsa, sarlavha noto'g'ri joydan qirqiladi
 - Bir xil xato turli prefiks bilan yozilsa (masalan, oldida `Uncaught BadMethodCallException:`),
   ular alohida sarlavha bo'lib chiqadi
-- "Darajalar soni" bo'limida soni teng darajalarning tartibi har ishga tushirishda farq qilishi mumkin
 
 ## Reja
 

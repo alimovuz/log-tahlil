@@ -26,7 +26,7 @@ fn main() -> Result<()> {
             let min_daraja = matndan(level);
             if matches!(min_daraja, Daraja::Unknown(_)) {
                 anyhow::bail!(
-                    "Daraja - {level} qiymatiga ega emas! foydalanish bo'yicha ko'rsatmalarni --help buyrug'i orqali olishingiz mumkin."
+                    "Daraja - {level} qiymat qabul qila olmaydi (mavjud qiymatlar: debug, info, notice, warning, error, critical, alert, emergency)! foydalanish bo'yicha ko'rsatmalarni --help buyrug'i orqali olishingiz mumkin."
                 )
             } else {
                 Some(min_daraja)
@@ -55,7 +55,7 @@ fn main() -> Result<()> {
 
     let mut tartiblangan: Vec<(&Daraja, u32)> = daraja_sonlari.into_iter().collect();
 
-    tartiblangan.sort_by(|a, b| b.1.cmp(&a.1));
+    tartiblangan.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| b.0.cmp(&a.0)));
     println!("Darajalar soni:");
     for (daraja, soni) in &tartiblangan {
         println!("  {:?}: {}", daraja, soni);

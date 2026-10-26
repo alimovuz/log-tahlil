@@ -1,17 +1,44 @@
-[2026-10-21 09:14:02] production.INFO: User logged in {"user_id":"USER_1"}
-[2026-10-21 09:14:37] production.INFO: Order created {"order_id":1042,"items":3}
-[2026-10-21 09:15:10] production.WARNING: Slow query detected {"time_ms":1840,"table":"orders"}
-[2026-10-21 09:16:55] production.ERROR: Undefined array key "price" {"userId":"USER_2","exception":"[object] (ErrorException(code: 0): Undefined array key \"price\" at /var/www/app/Services/CartService.php:57)
+[2026-10-26 08:00:01] local.DEBUG: Booting application {"memory":"12MB"}
+[2026-10-26 08:01:15] local.WARNING: Cache miss for key "user_42" {"driver":"redis"}
+[2026-10-26 08:02:40] local.INFO: User logged in {"userId":3}
+[2026-10-26 08:03:05] local.CUSTOM: Feature flag "new_checkout" enabled {"source":"admin"}
+[2026-10-26 08:04:22] local.NOTICE: Slow query detected {"ms":1250}
+[2026-10-26 08:05:10] local.ERROR: Undefined array key 7 {"userId":3,"exception":"[object] (ErrorException(code: 0): Undefined array key 7 at /var/www/app/Http/Controllers/OrderController.php:58)"}
 [stacktrace]
-#0 /var/www/app/Services/CartService.php(57): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
-#1 /var/www/app/Http/Controllers/CartController.php(31): App\\Services\\CartService->total()
-#2 /var/www/vendor/laravel/framework/src/Illuminate/Routing/Controller.php(54): App\\Http\\Controllers\\CartController->show()
-#3 {main}
-"}
-[2026-10-21 09:17:20] production.INFO: Payment received {"order_id":1042,"amount":150000}
-[2026-10-21 09:20:03] production.ERROR: Connection refused {"exception":"[object] (RedisException(code: 0): Connection refused at /var/www/vendor/predis/Client.php:120)
-[stacktrace]
-#0 /var/www/vendor/predis/Client.php(120): Predis\\Connection->connect()
+#0 /var/www/app/Http/Controllers/OrderController.php(58): handleError()
 #1 {main}
-"}
-[2026-10-21 09:21:44] production.WARNING: Rate limit almost reached {"ip":"IP_1","hits":58}
+[2026-10-26 08:06:33] local.WARNING: Cache miss for key "order_17" {"driver":"redis"}
+[2026-10-26 08:07:50] local.CRITICAL: Payment gateway timeout after 30 seconds {"orderId":1001,"exception":"[object] (GuzzleHttp\\Exception\\ConnectException(code: 0): cURL error 28 at /var/www/vendor/guzzlehttp/guzzle/src/Handler/CurlFactory.php:210)"}
+[stacktrace]
+#0 /var/www/app/Services/PaymentService.php(41): GuzzleHttp\\Client->post()
+#1 {main}
+[2026-10-26 08:09:12] local.INFO: Order created {"orderId":1001}
+[2026-10-26 08:10:45] local.ERROR: SQLSTATE[HY000] [2002] Connection refused {"exception":"[object] (PDOException(code: 2002): SQLSTATE[HY000] [2002] Connection refused at /var/www/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:65)"}
+[stacktrace]
+#0 /var/www/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(65): PDO->__construct()
+#1 {main}
+[2026-10-26 08:12:01] local.WARNING: Deprecated method "getUser" called {"file":"UserService.php"}
+[2026-10-26 08:13:30] local.DEBUG: Query executed {"ms":12}
+[2026-10-26 08:14:55] local.ERROR: Undefined array key 12 {"userId":5,"exception":"[object] (ErrorException(code: 0): Undefined array key 12 at /var/www/app/Http/Controllers/OrderController.php:58)"}
+[stacktrace]
+#0 /var/www/app/Http/Controllers/OrderController.php(58): handleError()
+#1 {main}
+[2026-10-26 08:16:20] local.CRITICAL: Disk usage at 95% {"mount":"/var"}
+[2026-10-26 08:17:40] local.ALERT: Queue worker stopped {"queue":"emails"}
+[2026-10-26 08:19:05] local.WARNING: Cache miss for key "cart_9" {"driver":"redis"}
+[2026-10-26 08:20:30] local.ERROR: SQLSTATE[HY000] [2002] Connection refused {"exception":"[object] (PDOException(code: 2002): SQLSTATE[HY000] [2002] Connection refused at /var/www/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:65)"}
+[stacktrace]
+#0 /var/www/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(65): PDO->__construct()
+#1 {main}
+[2026-10-26 08:21:58] local.INFO: User logged out {"userId":3}
+[2026-10-26 08:23:15] local.NOTICE: Slow query detected {"ms":980}
+[2026-10-26 08:24:40] local.CRITICAL: Payment gateway timeout after 45 seconds {"orderId":1002,"exception":"[object] (GuzzleHttp\\Exception\\ConnectException(code: 0): cURL error 28 at /var/www/vendor/guzzlehttp/guzzle/src/Handler/CurlFactory.php:210)"}
+[stacktrace]
+#0 /var/www/app/Services/PaymentService.php(41): GuzzleHttp\\Client->post()
+#1 {main}
+[2026-10-26 08:26:02] local.WARNING: Rate limit approaching {"ip":"10.0.0.5"}
+[2026-10-26 08:27:30] local.ERROR: Undefined array key 3 {"userId":8,"exception":"[object] (ErrorException(code: 0): Undefined array key 3 at /var/www/app/Http/Controllers/OrderController.php:58)"}
+[stacktrace]
+#0 /var/www/app/Http/Controllers/OrderController.php(58): handleError()
+#1 {main}
+[2026-10-26 08:28:59] local.EMERGENCY: Database server unreachable {"host":"db-1"}
