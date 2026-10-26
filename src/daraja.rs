@@ -1,5 +1,6 @@
-#[derive(Debug, PartialEq, Eq, Hash, Clone)]
+#[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum Daraja {
+    Unknown(String),
     Debug,
     Info,
     Notice,
@@ -8,7 +9,6 @@ pub enum Daraja {
     Critical,
     Alert,
     Emergency,
-    Unknown(String),
 }
 
 pub fn matndan(s: &str) -> Daraja {
