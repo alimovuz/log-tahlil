@@ -41,7 +41,7 @@ fn main() -> Result<()> {
     let matn = fs::read_to_string(&args.fayl)
         .with_context(|| format!("Fayl topilmadi {}", args.fayl.display()))?;
 
-    let yozuvlar = yig(&matn, &re, &re_sarlavha);
+    let (yozuvlar, xato_vaqtlar_soni) = yig(&matn, &re, &re_sarlavha);
 
     let filterlangan_yozuvlar: Vec<Yozuv> = match minimal_daraja {
         Some(daraja) => yozuvlar
@@ -73,5 +73,8 @@ fn main() -> Result<()> {
         println!("  ... va yana {} ta", tartiblangan_xatolar.len() - 10);
     }
 
+    if xato_vaqtlar_soni > 0 {
+        eprintln!("Ogohlantirish: vaqti noto'g'ri bo'lgan {xato_vaqtlar_soni} ta yozuv o'tkazib yuborildi.")
+    }
     Ok(())
 }

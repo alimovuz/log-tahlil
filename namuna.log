@@ -42,3 +42,26 @@
 #0 /var/www/app/Http/Controllers/OrderController.php(58): handleError()
 #1 {main}
 [2026-10-26 08:28:59] local.EMERGENCY: Database server unreachable {"host":"db-1"}
+[2026-02-30 08:00:00] local.ERROR: LEAK first invalid {"case":"feb30"}
+[stacktrace]
+#0 /var/www/app/First.php(10): run()
+#1 {main}
+[2026-10-26 08:01:00] local.INFO: User logged in {"userId":1}
+[2026-10-26 08:02:00] local.ERROR: Undefined array key 7 {"userId":1}
+[stacktrace]
+#0 /var/www/app/Http/Controllers/OrderController.php(58): handleError()
+#1 {main}
+[2026-10-26 25:10:00] local.ERROR: LEAK hour out of range {"case":"hour25"}
+[stacktrace]
+#0 /var/www/app/Hour.php(20): run()
+#1 {main}
+[2026-13-01 08:15:00] local.CRITICAL: LEAK month out of range {"case":"month13"}
+[2026-10-26 08:20:00] local.WARNING: Cache miss for key "cart_9" {"driver":"redis"}
+[2026-10-26 08:25:00] local.ERROR: Undefined array key 12 {"userId":2}
+[stacktrace]
+#0 /var/www/app/Http/Controllers/OrderController.php(58): handleError()
+#1 {main}
+[2026-02-29 08:30:00] local.ALERT: LEAK leap day {"case":"feb29"}
+[stacktrace]
+#0 /var/www/app/Leap.php(30): run()
+#1 {main}

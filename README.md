@@ -11,10 +11,10 @@ Log faylni o'qib, har bir daraja necha marta uchraganini va eng ko'p takrorlanga
 
 ```
 Darajalar soni:
-  Error: 5
-  Warning: 5
+  Error: 7
+  Warning: 6
+  Info: 4
   Critical: 3
-  Info: 3
   Notice: 2
   Debug: 2
   Emergency: 1
@@ -22,14 +22,15 @@ Darajalar soni:
   Unknown("CUSTOM"): 1
 
 Top xatolar:
-  3 × Undefined array key N
+  5 × Undefined array key N
   2 × Payment gateway timeout after N seconds
   2 × SQLSTATE[HYN] [N] Connection refused
   1 × Database server unreachable
   1 × Disk usage at N%
   1 × Queue worker stopped
+Ogohlantirish: vaqti noto'g'ri bo'lgan 4 ta yozuv o'tkazib yuborildi.
 ```
-
+Oxirgi qator stderr’ga chiqadi, shuning uchun > hisobot.txt bilan yo’naltirilganda u faylga tushmaydi.
 ## Ishga tushirish
 
 Talab: Rust (edition 2024) va `cargo`.
