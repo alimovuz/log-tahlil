@@ -1,8 +1,10 @@
 use anyhow::{Context, Result};
+use chrono::NaiveDateTime;
 use clap::Parser;
 use log_tahlil::daraja::{Daraja, matndan};
+use log_tahlil::filter::filter_funksiya;
 use log_tahlil::hisobot::{darajalar_soni, top_xatolar};
-use log_tahlil::yigish::yig;
+use log_tahlil::yigish::{yig, VAQT_FORMAT};
 use log_tahlil::yozuv::Yozuv;
 use regex::Regex;
 use std::fs;
@@ -16,10 +18,22 @@ struct Args {
     /// Ruxsat berilgan daraja qiymatlari: debug, info, notice, warning, error, critical, alert, emergency
     #[arg(short, long)]
     level: Option<String>,
+    /// Ruxsat etilgan kirish formati quyidagicha: 2026-10-20 08:00:00
+    #[arg(long, value_parser = vaqt_format)]
+    from: Option<NaiveDateTime>,
+    /// Ruxsat etilgan kirish formati quyidagicha (kiritilgan vaqt oraliqqa kirmaydi): 2026-10-20 08:00:00
+    #[arg(long, value_parser = vaqt_format)]
+    to: Option<NaiveDateTime>,
 }
 
 fn main() -> Result<()> {
     let args = Args::parse();
+
+    if let (Some(boshi), Some(oxiri)) = (&args.from, &args.to) {
+        if boshi >= oxiri {
+            anyhow::bail!("--from --to dan oldin bo'lishi kerak")
+        }
+    }
 
     let minimal_daraja = match &args.level {
         Some(level) => {
@@ -43,13 +57,8 @@ fn main() -> Result<()> {
 
     let (yozuvlar, xato_vaqtlar_soni) = yig(&matn, &re, &re_sarlavha);
 
-    let filterlangan_yozuvlar: Vec<Yozuv> = match minimal_daraja {
-        Some(daraja) => yozuvlar
-            .into_iter()
-            .filter(|elem| daraja <= elem.daraja)
-            .collect(),
-        None => yozuvlar,
-    };
+    let filterlangan_yozuvlar: Vec<Yozuv> =
+        filter_funksiya(yozuvlar, &minimal_daraja, (&args.from, &args.to));
 
     let daraja_sonlari = darajalar_soni(&filterlangan_yozuvlar);
 
@@ -74,7 +83,17 @@ fn main() -> Result<()> {
     }
 
     if xato_vaqtlar_soni > 0 {
-        eprintln!("Ogohlantirish: vaqti noto'g'ri bo'lgan {xato_vaqtlar_soni} ta yozuv o'tkazib yuborildi.")
+        eprintln!(
+            "Ogohlantirish: vaqti noto'g'ri bo'lgan {xato_vaqtlar_soni} ta yozuv o'tkazib yuborildi."
+        )
     }
     Ok(())
+}
+
+fn vaqt_format(vaqt: &str) -> std::result::Result<NaiveDateTime, String> {
+    NaiveDateTime::parse_from_str(vaqt, VAQT_FORMAT)
+        .map_err(|_| format!(
+            "Noto'g'ri sana formati: '{}'. Iltimos, quyidagi shaklda kiriting: YYYY-MM-DD HH:MM:SS (masalan: 2026-10-20 08:00:00)",
+            vaqt
+        ))
 }

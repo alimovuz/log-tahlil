@@ -1,7 +1,8 @@
-use chrono::NaiveDateTime;
 use crate::yozuv::{Yozuv, sarlavhani_ajrat};
+use chrono::NaiveDateTime;
 use regex::{Captures, Regex};
 
+pub const VAQT_FORMAT: &str = "%Y-%m-%d %H:%M:%S";
 fn sarlavhani_normallashtir(xabar: &str, re: &Regex) -> String {
     let xabar_qismlar = xabar.split(" {").collect::<Vec<&str>>();
     let sarlavha = re.replace_all(xabar_qismlar[0], |c: &Captures| {
@@ -24,7 +25,7 @@ pub fn yig(matn: &str, re: &Regex, sarlavha_re: &Regex) -> (Vec<Yozuv>, u32) {
             if let Some(yozuv) = joriy {
                 yozuvlar.push(yozuv);
             }
-            let parse_vaqt = NaiveDateTime::parse_from_str(vaqt.as_str(), "%Y-%m-%d %H:%M:%S");
+            let parse_vaqt = NaiveDateTime::parse_from_str(vaqt.as_str(), VAQT_FORMAT);
 
             match parse_vaqt {
                 Ok(v) => {
@@ -41,7 +42,6 @@ pub fn yig(matn: &str, re: &Regex, sarlavha_re: &Regex) -> (Vec<Yozuv>, u32) {
                     joriy = None;
                 }
             }
-
         } else if let Some(y) = &mut joriy {
             y.chaqiruvlar.push(qator.to_string());
         }
