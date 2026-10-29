@@ -16,23 +16,32 @@ fn sarlavhani_normallashtir(xabar: &str, re: &Regex) -> String {
     sarlavha.into_owned()
 }
 
-pub fn yig(matn: &str, re: &Regex, sarlavha_re: &Regex) -> (Vec<Yozuv>, u32) {
+pub fn yig(matn: &str) -> (Vec<Yozuv>, u32) {
+    let re = Regex::new(r"^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\] \w+\.(\w+): (.*)$").expect("qator regex'i noto'g'ri!");
+    let re_sarlavha = Regex::new(r#""[^"]*"|\d+"#).expect("sarlavha regex'i noto'g'ri!");
+    let re_joy = Regex::new(r" at (\S+:\d+)\)").expect("joy regex'i noto'g'ri!");
     let mut yozuvlar: Vec<Yozuv> = Vec::new();
     let mut joriy: Option<Yozuv> = None;
     let mut xato_vaqtlar_soni: u32 = 0;
+
     for qator in matn.lines() {
-        if let Some((vaqt, daraja, xabar)) = sarlavhani_ajrat(qator, re) {
+        if let Some((vaqt, daraja, xabar)) = sarlavhani_ajrat(qator, &re) {
             if let Some(yozuv) = joriy {
                 yozuvlar.push(yozuv);
             }
             let parse_vaqt = NaiveDateTime::parse_from_str(vaqt.as_str(), VAQT_FORMAT);
+            let joy = match re_joy.captures(xabar.as_str()) {
+                Some(cap) => Some(cap[1].to_string()),
+                None => None,
+            };
 
             match parse_vaqt {
-                Ok(v) => {
+                Ok(vaqt) => {
                     joriy = Some(Yozuv {
-                        vaqt: v,
+                        vaqt,
+                        joy,
                         daraja,
-                        sarlavha: sarlavhani_normallashtir(&xabar, sarlavha_re),
+                        sarlavha: sarlavhani_normallashtir(&xabar, &re_sarlavha),
                         matn: xabar,
                         chaqiruvlar: vec![],
                     });

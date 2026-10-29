@@ -9,6 +9,7 @@ pub struct Yozuv {
     pub sarlavha: String,
     pub matn: String,
     pub chaqiruvlar: Vec<String>,
+    pub joy: Option<String>
 }
 
 pub fn sarlavhani_ajrat(qator: &str, re: &Regex) -> Option<(String, Daraja, String)> {

@@ -42,6 +42,11 @@
 #0 /var/www/app/Http/Controllers/OrderController.php(58): handleError()
 #1 {main}
 [2026-10-26 08:28:59] local.EMERGENCY: Database server unreachable {"host":"db-1"}
+[2026-10-26 08:29:30] local.ERROR: Undefined array key 4 {"userId":9,"exception":"[object] (ErrorException(code: 0): Undefined array key 4 at /var/www/app/Http/Controllers/CartController.php:12)"}
+[stacktrace]
+#0 /var/www/app/Http/Controllers/CartController.php(12): handleError()
+#1 {main}
+[2026-10-26 08:29:45] local.ERROR: To'lov o'tmadi {"orderId":5}
 [2026-02-30 08:00:00] local.ERROR: LEAK first invalid {"case":"feb30"}
 [stacktrace]
 #0 /var/www/app/First.php(10): run()
